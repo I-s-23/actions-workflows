@@ -1,0 +1,25 @@
+name: Slack Notification Build Result
+permissions:
+  contents: read
+  actions: read
+on:
+  workflow_call:
+    inputs:
+      status:
+        required: true
+        type: string
+    secrets:
+      slack_webhook_url:
+        required: true
+jobs:
+  notification:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ input.status }}
+          fields: repo,message,commit,author,action,eventName,ref,workflow,job,took,pullRequest
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.slack_webhook_url }}
+        if: always()
