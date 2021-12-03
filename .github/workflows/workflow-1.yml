@@ -1,7 +1,4 @@
 name: Slack Notification Build Result
-permissions:
-  contents: read
-  actions: read
 on:
   workflow_call:
     inputs:
@@ -16,10 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: 8398a7/action-slack@v3
-        with:
-          status: ${{ input.status }}
-          fields: repo,message,commit,author,action,eventName,ref,workflow,job,took,pullRequest
+      - uses: rtCamp/action-slack-notify@v2
         env:
-          SLACK_WEBHOOK_URL: ${{ secrets.slack_webhook_url }}
+          SLACK_WEBHOOK: ${{ secrets.slack_webhook_url }}
         if: always()
