@@ -1,10 +1,6 @@
 name: Slack Notification Build Result
 on:
   workflow_call:
-    inputs:
-      status:
-        required: true
-        type: string
     secrets:
       slack_webhook_url:
         required: true
