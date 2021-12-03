@@ -4,6 +4,8 @@ on:
     secrets:
       slack_webhook_url:
         required: true
+      repo_name:
+        required: true
 jobs:
   notification:
     runs-on: ubuntu-latest
@@ -12,4 +14,6 @@ jobs:
       - uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_WEBHOOK: ${{ secrets.slack_webhook_url }}
+          SLACK_TITLE: ${{ secrets.repo_name }}
+          SLACK_USERNAME: GitHubActions
         if: always()
